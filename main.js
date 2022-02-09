@@ -1,3 +1,55 @@
+var topic = require('./lib/topic');
+var author = require('./lib/author');
+var bodyParser = require('body-parser');
+
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// json 형식의 요청일 경우 이렇게 처리하면 된다~
+app.use(bodyParser.json());
+
+// route, routing
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+// })
+
+app.get('/', function (request, response) {
+    topic.home(request, response);
+});
+
+app.get('/page/:pageId', function (request, response) {
+    topic.page(request, response);
+});
+
+app.get('/create', function(request, response) {
+    topic.create(request, response);
+});
+
+app.post('/create_process', function(request, response) {
+    topic.create_process(request, response);
+});
+
+app.get('/update/:pageId', function(request, response) {
+    topic.update(request, response);
+});
+
+app.post('/update_process', function(request, response) {
+    topic.update_process(request, response);
+});
+
+app.post('/delete_process', function(request, response) {
+    topic.delete_process(request, response);
+});
+
+app.listen(port, () => {
+    console.log(`Example app listening on port ${port}`)
+})
+
+/*
 var http = require('http');
 var url = require('url');   // url이라는 모듈을 사용할 것이다
 var topic = require('./lib/topic');
@@ -10,14 +62,14 @@ var app = http.createServer(function(request,response){ // request : 요청받�
 
     if (pathname === '/') {
         if (queryData.id === undefined) {
-            topic.home(request, response);
+
         } else {        // id값을 무언가 받은 경우
-            topic.page(request, response);
+            
         }
     } else if (pathname === '/create') {
-        topic.create(request, response);
+        
     } else if (pathname === '/create_process') {
-        topic.create_process(request, response);
+        
     } else if (pathname === '/update') {
         topic.update(request, response)
     } else if (pathname === '/update_process') {
@@ -40,3 +92,4 @@ var app = http.createServer(function(request,response){ // request : 요청받�
     }
 });
 app.listen(3000);
+*/
